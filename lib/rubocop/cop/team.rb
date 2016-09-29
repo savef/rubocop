@@ -54,7 +54,14 @@ module RuboCop
 
       def cops
         @cops ||= @cop_classes.select { |c| cop_enabled?(c) }.map do |cop_class|
-          cop_class.new(@config, @options)
+          cop = cop_class.new(@config, @options)
+
+          unless cop.valid_config?
+            msg = "invalid configuration for cop #{cop.name} detected"
+            raise ValidationError, msg unless cop.valid_config?
+          end
+
+          cop
         end
       end
 

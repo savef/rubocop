@@ -37,6 +37,11 @@ module RuboCop
           "`#{delimiters[0]}` and `#{delimiters[1]}`."
         end
 
+        def valid_config?
+          values = cop_config['PreferredDelimiters'].values
+          values.all? { |value| value.respond_to?(:to_str) }
+        end
+
         private
 
         def autocorrect(node)

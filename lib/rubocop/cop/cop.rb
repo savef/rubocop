@@ -247,6 +247,10 @@ module RuboCop
         details.nil? || details.empty? ? nil : details
       end
 
+      def valid_config?
+        true
+      end
+
       private
 
       def annotate_message(message)
